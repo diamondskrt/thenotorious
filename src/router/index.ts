@@ -1,6 +1,18 @@
 import Vue from 'vue';
-import VueRouter, { RouteConfig } from 'vue-router';
-import Home from '../views/Home.vue';
+import
+  VueRouter,
+  {
+    NavigationGuardNext,
+    Route,
+    RouteConfig,
+    RouteRecord
+  } from 'vue-router';
+import store from '@/store';
+import Auth from './modules/auth';
+import Admin from './modules/admin';
+import AuthIndex from '@/views/auth/Index.vue';
+import AdminIndex from '@/views/admin/Index.vue';
+import Home from '@/views/Home.vue';
 
 Vue.use(VueRouter);
 
@@ -11,19 +23,36 @@ const routes: Array<RouteConfig> = [
     component: Home,
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    path: '/auth',
+    component: AuthIndex,
+    children: Auth,
   },
+  {
+    path: '/admin',
+    component: AdminIndex,
+    children: Admin,
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/'
+  }
 ];
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
+});
+
+router.beforeEach((to: Route, from: Route, next: NavigationGuardNext) => {
+  if (to.matched.some((record: RouteRecord) => record.meta?.auth)) {
+    if (!store.getters['firebase/user']) {
+      next({
+        path: '/auth/sign-in',
+      });
+    }
+  }
+  next();
 });
 
 export default router;

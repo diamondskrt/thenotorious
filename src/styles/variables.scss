@@ -1,0 +1,32 @@
+$card-border-radius: 0;
+$menu-content-border-radius: 0;
+$btn-border-radius: 0;
+$btn-font-weight: 300;
+$text-field-details-padding-top: 5px;
+$list-item-min-height: 36px;
+$list-item-padding: 0 36px;
+$badge-height: 30px;
+$badge-min-width: 30px;
+$badge-border-radius: 30px;
+$badge-padding: 8px 6px;
+$badge-font-size: 14px;
+$tab-font-weight: 300;
+
+$headings: (
+  'h3': (
+    'text-transform': uppercase,
+    'weight': 500
+  ),
+  'h4': (
+    'text-transform': uppercase,
+    'weight': 500
+  ),
+  'h6': (
+    'text-transform': uppercase,
+    'weight': 300
+  ),
+  'subtitle-1': (
+    'text-transform': uppercase,
+    'weight': 300
+  )
+);
